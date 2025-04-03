@@ -1,4 +1,7 @@
 # workout_tracker
-CIS 434 Project
+This is the official repository of the semester-long group project for CIS 434 (Software Engineering) for the Spring 2025 semester at Cleveland State University
 
-Group Members: Mason Clay, Spencer York, Veer Gaudani
+The members of this group are: 
+  - Mason Clay
+  - Spencer York
+  - Veer Gaudani
