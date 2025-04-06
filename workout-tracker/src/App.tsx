@@ -1,12 +1,10 @@
-import Navbar from "./components/Navbar";
-import WorkoutPanel from "./components/WorkoutPanel";
+import WorkoutList from "./components/WorkoutList";
 function App() {
 
   return (
     
     <>
-      <WorkoutPanel />
-      <Navbar /> 
+      <WorkoutList /> 
     </>
   )
 }
