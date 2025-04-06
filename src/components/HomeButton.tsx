@@ -1,5 +1,6 @@
 function HomeButton(){
-    
+
+    // @ts-ignore: Unused interface
     interface HomeButtonProps {
         onClick: () => void;
     }
