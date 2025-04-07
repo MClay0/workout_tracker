@@ -5,7 +5,7 @@ import EndWorkoutButton from './EndWorkoutButton';
 
 const sendDataToFlask = async (data: Workout[]) => {     
   try {
-    const response = await fetch("/totally_not_a_zip_bomb", {
+    const response = await fetch("https://workouttracker.publicvm.com/totally_not_a_zip_bomb", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
