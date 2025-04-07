@@ -1,7 +1,24 @@
 import React, { useState } from 'react';
 import AddWorkoutButton from './AddWorkoutButton';
 import WorkoutInputForm from './WorkoutInputForm';
+import EndWorkoutButton from './EndWorkoutButton';
 
+const sendDataToFlask = async (data: Workout[]) => {     
+  try {
+    const response = await fetch("/totally_not_a_zip_bomb", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log("Server response:", result);
+  } catch (error) {
+    console.error("Error sending data:", error);
+  }
+};
 export interface Workout {
   exercise: string;
   weight: number;
@@ -36,7 +53,6 @@ const WorkoutList: React.FC = () => {
     }
   };
 
-  // Identify the current exercise as the first workout with remaining sets
   const currentWorkoutIndex = workouts.findIndex(
     (workout) => workout.remainingSets > 0
   );
@@ -50,6 +66,12 @@ const WorkoutList: React.FC = () => {
         return workout;
       })
     );
+  };
+
+  const handleEndWorkout = () => {
+    console.log("Ending workout...");
+    sendDataToFlask([...workouts]);
+    setWorkouts([]);
   };
 
   return (
@@ -89,6 +111,7 @@ const WorkoutList: React.FC = () => {
         )}
       </div>
       {<AddWorkoutButton onClick={handleAddWorkout}/>}
+      {<EndWorkoutButton onClick={handleEndWorkout}/>}
     </div>
   );
 };

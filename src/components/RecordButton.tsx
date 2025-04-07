@@ -1,6 +1,7 @@
 function RecordButton(){
 
     // @ts-ignore: Unused interface
+
     interface RecordButtonProps {
         onClick: () => void;
     }
