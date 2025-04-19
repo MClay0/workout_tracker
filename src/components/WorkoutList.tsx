@@ -24,7 +24,7 @@ export interface Workout {
   weight: number;
   sets: number;
   reps: number;
-  remainingSets: number;
+  //remainingSets: number;
 }
 
 export interface WorkoutInput {
