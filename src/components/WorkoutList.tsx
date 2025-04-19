@@ -20,6 +20,7 @@ const sendDataToFlask = async (data: Workout[]) => {
   }
 };
 export interface Workout {
+  remainingSets: number;
   exercise: string;
   weight: number;
   sets: number;
