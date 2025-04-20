@@ -3,14 +3,14 @@ import AddWorkoutButton from './AddWorkoutButton';
 import WorkoutInputForm from './WorkoutInputForm';
 import EndWorkoutButton from './EndWorkoutButton';
 
-const sendDataToFlask = async (data: Workout[]) => {     
+const sendDataToFlask = async (data: Workout[], username: String) => {     
   try {
     const response = await fetch("https://workouttracker.publicvm.com/totally_not_a_zip_bomb", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({'username':username, data})
     });
 
     const result = await response.json();
@@ -35,7 +35,11 @@ export interface WorkoutInput {
   reps: number;
 }
 
-const WorkoutList: React.FC = () => {
+interface WorkoutListProps {
+  username: string | null; // Accept the username as a prop
+}
+
+const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [pendingWorkout, setPendingWorkout] = useState<WorkoutInput | null>(null);
 
@@ -71,13 +75,13 @@ const WorkoutList: React.FC = () => {
 
   const handleEndWorkout = () => {
     console.log("Ending workout...");
-    sendDataToFlask([...workouts]);
+    sendDataToFlask([...workouts], username || '');
     setWorkouts([]);
   };
 
   return (
     <div>
-      <h2>Workout Tracker</h2>
+
       <div>
         {workouts.length === 0 && !pendingWorkout && (
           <p>Add workouts to get started</p>

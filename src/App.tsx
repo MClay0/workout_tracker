@@ -1,25 +1,22 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import WorkoutList from './components/WorkoutList';
 import LoginPage from './components/LoginPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<string | null>(null); // Store the logged-in user's username
 
-  const handleLogin = () => {
-    setIsLoggedIn(true); // Set the user as logged in
-  };
-
-  const handleCreateAccount = () => {
-    console.log('Creating account...');
-    alert('Account created successfully!');
+  const handleLogin = (username: string) => {
+    setIsLoggedIn(true);
+    setCurrentUser(username); // Set the logged-in user's username
   };
 
   return (
     <>
       {isLoggedIn ? (
-        <WorkoutList />
+        <WorkoutList username={currentUser} /> // Pass the username to WorkoutList
       ) : (
-        <LoginPage onLogin={handleLogin}/>
+        <LoginPage onLogin={handleLogin} />
       )}
     </>
   );

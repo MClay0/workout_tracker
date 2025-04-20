@@ -3,7 +3,7 @@ import React from 'react';
 interface LoginButtonProps {
   username: string;
   password: string;
-  onSuccess: () => void; // Callback for successful login
+  onSuccess: (username: string) => void; // Pass the username to the parent on success
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({ username, password, onSuccess }) => {
@@ -21,7 +21,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ username, password, onSuccess
       const result = await response.json();
       if (result.status === 'success') {
         console.log('Login successful');
-        onSuccess(); // Notify parent component of successful login
+        onSuccess(username); // Pass the username to the parent component
       } else {
         alert(`Login failed: ${result.message}`);
       }

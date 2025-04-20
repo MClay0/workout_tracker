@@ -3,7 +3,7 @@ import LoginButton from './LoginButton';
 import CreateAccountButton from './CreateAccountButton';
 
 interface LoginPageProps {
-  onLogin: () => void;
+  onLogin: (username: string) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
