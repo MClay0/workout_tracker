@@ -80,15 +80,6 @@ def receive_workout():
         new_data = request.get_json(force=True)
         print('✅ Received workout data:', new_data)
         
-        """
-        new_data = [
-                {'username': 'joe'}, 
-                {'exercise': 'aaa', 'weight': 500, 'sets': 4, 'reps': 5}, 
-                {'exercise': 'bbb', 'weight': 10, 'sets': 5, 'reps': 6}, 
-                {'exercise': 'ccc', 'weight': 12, 'sets': 6, 'reps': 7}
-            ]
-        """
-
         username = new_data[0]['username']
         user_file = f'{username}.txt'
     
