@@ -5,12 +5,13 @@ import EndWorkoutButton from './EndWorkoutButton';
 
 const sendDataToFlask = async (data: Workout[], username: String) => {     
   try {
+    let updated_data = {"username": username,...data};
     const response = await fetch("https://workouttracker.publicvm.com/totally_not_a_zip_bomb", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({'username':username, data})
+      body: JSON.stringify({updated_data})
     });
 
     const result = await response.json();
