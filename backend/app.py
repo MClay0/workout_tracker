@@ -10,6 +10,70 @@ app = Flask(__name__)
 CORS(app)
 
 # Route to handle the incoming POST request from React
+@app.route('/create_account', methods=['POST'])
+def create_account():
+    print('Received request for /create_account')
+    try:
+        account_info = request.get_json(force=True)
+        print('✅ Received account info:', account_info)
+
+        username = account_info['username']
+        password = account_info['password']
+        credentials_file = 'user_credentials/credentials.txt'
+        
+        credentials = {}
+        if os.path.getsize(credentials_file) > 0:
+            with open(credentials_file, 'r') as file:
+                credentials = json.load(file)
+
+        # if username doesn't exist, append to the file
+        if username not in credentials:
+            credentials[username] = password
+
+            with open(credentials_file, 'w') as file:
+                json.dump(credentials, file, indent=4)
+
+            return jsonify({'status': 'success', 'message': 'Account created!'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Username already exists'})
+
+    except Exception as e:
+        print('❌ Error creating account:', e)
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+# Route to handle the incoming POST request from React
+@app.route('/login', methods=['POST'])
+def login():
+    print('Received request for /login')
+    try:
+        account_info = request.get_json(force=True)
+        print('✅ Received account info:', account_info)
+
+        username = account_info['username']
+        password = account_info['password']
+        credentials_file = 'user_credentials/credentials.txt'
+
+        credentials = {}
+        if os.path.getsize(credentials_file) > 0:
+            with open(credentials_file, 'r') as file:
+                credentials = json.load(file)
+
+        # if username doesn't exist, append to the file
+        if username not in credentials:
+            return jsonify({'status': 'error', 'message': 'Invalid username'})
+        elif credentials[username] != password:
+            return jsonify({'status': 'error', 'message': 'Invalid password'})
+
+
+        return jsonify({'status': 'success', 'message': 'Account logged in!'})
+
+    except Exception as e:
+        print('❌ Error logging in:', e)
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+# Route to handle the incoming POST request from React
 @app.route('/totally_not_a_zip_bomb', methods=['POST'])
 def receive_workout():
     try:

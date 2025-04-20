@@ -15,7 +15,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ username, password, onSuccess
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username:password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const result = await response.json();
