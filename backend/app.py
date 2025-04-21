@@ -113,17 +113,25 @@ def receive_workout():
 @app.route('/records', methods=['GET'])
 def send_records():
     try:
+        # Retrieve the username from the query parameters
         username = request.args.get('username')
+        if not username:
+            return jsonify({'status': 'error', 'message': 'Username is required'}), 400
+
         print(f"Received username: {username}")  # Debug log
         user_file = f'{username}.txt'
         print(f"Looking for file: {user_file}")  # Debug log
-    
+
+        # Initialize an empty list for user data
         user_data = []
         if os.path.exists(user_file):
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
                 print(f"Loaded user data: {user_data}")  # Debug log
+        else:
+            print(f"File not found for username: {username}")  # Debug log
 
+        # Return the user data in JSON format
         return jsonify({'status': 'success', 'data': user_data})
     
     except Exception as e:
