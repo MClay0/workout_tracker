@@ -23,7 +23,7 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
       }
 
       try {
-        let url = "https://workouttracker.publicvm.com/records?username=" + username;
+        let url = `https://workouttracker.publicvm.com/records?username=${username}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
