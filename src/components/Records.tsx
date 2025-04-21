@@ -11,9 +11,9 @@ const Records: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRecords = async () => {
+    const fetchRecords = async (username:string) => {
       try {
-        const response = await fetch('https://workouttracker.publicvm.com/records', {
+        const response = await fetch(`https://workouttracker.publicvm.com/records${encodeURIComponent(username)}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -110,6 +110,23 @@ def receive_workout():
         print('❌ Error parsing workout data:', e)
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/records', methods=['GET'])
+def send_records():
+    try:
+        username = request.args.get('username')
+        user_file = f'{username}.txt'
+    
+        # store existing user data
+        user_data = []
+        if os.path.exists(user_file):
+            with open(user_file, 'r') as file:
+                user_data = json.load(file)
+
+        return jsonify({'status': 'success', 'data': user_data})
+    
+    except Exception as e:
+        print('❌ Error parsing workout data:', e)
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == '__main__':
     # Flask will run on port 5000, which will be forwarded by Nginx
