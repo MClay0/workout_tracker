@@ -110,7 +110,7 @@ def receive_workout():
         print('❌ Error parsing workout data:', e)
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
-@app.route('/records', methods=['POST'])
+@app.route('/records', methods=['GET'])
 def send_records():
     try:
         username = request.args.get('username')
