@@ -118,26 +118,29 @@ def send_records():
         if not username:
             return jsonify({'status': 'error', 'message': 'Username is required'}), 400
 
-        print(f"Received username: {username}")  # Debug log
+        print(f"✅ Received username: {username}")  # Debug log
         user_file = f'{username}.txt'
-        print(f"Looking for file: {user_file}")  # Debug log
+        print(f"🔍 Looking for file: {user_file}")  # Debug log
 
         # Initialize an empty list for user data
         user_data = []
         if os.path.exists(user_file):
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
-                print(f"Loaded user data: {user_data}")  # Debug log
+                print(f"📂 Loaded user data: {user_data}")  # Debug log
         else:
-            print(f"File not found for username: {username}")  # Debug log
+            print(f"⚠️ File not found for username: {username}")  # Debug log
 
         # Return the user data in JSON format
-        return jsonify({'status': 'success', 'data': user_data})
-    
-    except Exception as e:
-        print('❌ Error parsing workout data:', e)
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({'status': 'success', 'data': user_data}), 200
 
+    except json.JSONDecodeError:
+        print('❌ Error: Invalid JSON in user file')
+        return jsonify({'status': 'error', 'message': 'Invalid JSON in user file'}), 500
+
+    except Exception as e:
+        print(f'❌ Unexpected error: {e}')
+        return jsonify({'status': 'error', 'message': 'An unexpected error occurred'}), 500
 if __name__ == '__main__':
     # Flask will run on port 5000, which will be forwarded by Nginx
     app.run(host='0.0.0.0', port=5000, debug=True)

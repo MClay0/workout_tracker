@@ -9,8 +9,9 @@ interface RecordsProps {
   username: string | null;
 }
 
-const fetchRecords = async (username: string) => {
+const fetchRecords = async (username: string): Promise<{ status: string; data: Record[] }> => {
   try {
+    console.log(`🔍 Fetching records for username: ${username}`);
     const response = await fetch(`https://workouttracker.publicvm.com/records?username=${encodeURIComponent(username)}`, {
       method: 'GET',
       headers: {
@@ -19,14 +20,16 @@ const fetchRecords = async (username: string) => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch records');
+      const errorText = await response.text();
+      console.error(`❌ Server responded with an error: ${errorText}`);
+      throw new Error(`Failed to fetch records: ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('Fetched records:', data);
+    console.log('✅ Fetched records:', data);
     return data;
   } catch (error) {
-    console.error('Error fetching records:', error);
+    console.error('❌ Error fetching records:', error);
     throw error;
   }
 };
