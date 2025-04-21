@@ -120,7 +120,6 @@ def send_records():
 
         print(f"✅ Received username: {username}")  # Debug log
         user_file = f'{username}.txt'
-        print(f"🔍 Looking for file: {user_file}")  # Debug log
 
         # Initialize an empty list for user data
         user_data = {}
@@ -128,6 +127,7 @@ def send_records():
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
                 print(f"📂 Loaded user data: {user_data}")  # Debug log
+                user_data = {k: v for d in user_data for k, v in d.items()}  # Flatten the list of dictionaries
         else:
             print(f"⚠️ File not found for username: {username}")  # Debug log
 
