@@ -23,7 +23,8 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
       }
 
       try {
-        const response = await fetch(`https://workouttracker.publicvm.com/records?username=${encodeURIComponent(username)}`, {
+        let url = "https://workouttracker.publicvm.com/records?username=" + username;
+        const response = await fetch(url, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
