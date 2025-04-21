@@ -85,7 +85,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
   };
 
   if (showRecords) {
-    {showRecords && <Records username={username} />} // Render the Records page if `showRecords` is true
+    return <Records username={username} />;
   }
 
   return (
