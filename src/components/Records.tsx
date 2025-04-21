@@ -5,15 +5,25 @@ interface Record {
   bestSet: string;
 }
 
-const Records: React.FC = () => {
+interface RecordsProps {
+  username: string | null;
+}
+
+const Records: React.FC<RecordsProps> = ({ username }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRecords = async (username:string) => {
+    const fetchRecords = async () => {
+      if (!username) {
+        setError('No username provided.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await fetch(`https://workouttracker.publicvm.com/records${encodeURIComponent(username)}`, {
+        const response = await fetch(`https://workouttracker.publicvm.com/records?username=${encodeURIComponent(username)}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -25,7 +35,8 @@ const Records: React.FC = () => {
         }
 
         const data = await response.json();
-        setRecords(data.records); // Assuming the response has a `records` field
+        console.log('Fetched records:', data);
+        setRecords(data.data); // Assuming the response has a `data` field
         setLoading(false);
       } catch (err) {
         console.error('Error fetching records:', err);
@@ -35,7 +46,7 @@ const Records: React.FC = () => {
     };
 
     fetchRecords();
-  }, []);
+  }, [username]);
 
   if (loading) {
     return <p>Loading records...</p>;
