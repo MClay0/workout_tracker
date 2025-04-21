@@ -85,7 +85,7 @@ def receive_workout():
     
         # store existing user data
         user_data = []
-        if os.path.exists(user_file):
+        if os.path.exists("./"+user_file):
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
 
