@@ -125,7 +125,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
       </div>
       {<AddWorkoutButton onClick={handleAddWorkout}/>}
       {<button onClick={() => setShowRecords(true)}
-        style={{position:'absolute',bottom:0, width:'100%', 
+        style={{position:'absolute',bottom:50, width:'100%', 
                 height:'50px', backgroundColor:'#4CAF50', 
                 color:'white', border:'none', borderRadius:'5px', 
                 fontSize:'24px'}}>View Records</button> }

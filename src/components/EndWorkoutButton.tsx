@@ -8,7 +8,7 @@ export const EndWorkoutButton: React.FC<EndWorkoutButtonProps> = ({ onClick }) =
       onClick={onClick} // Attach the onClick handler here
       style={{
         position: 'absolute',
-        bottom: 50,
+        bottom: 0,
         width: '100%',
         height: '50px',
         backgroundColor: 'black',
