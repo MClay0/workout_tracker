@@ -13,7 +13,7 @@ const sendDataToFlask = async (data: Workout[], username: String) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({updated_data})
+      body: JSON.stringify(updated_data)
     });
 
     const result = await response.json();
