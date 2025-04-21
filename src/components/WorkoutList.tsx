@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddWorkoutButton from './AddWorkoutButton';
 import WorkoutInputForm from './WorkoutInputForm';
 import EndWorkoutButton from './EndWorkoutButton';
+import Records from './Records';
 
 const sendDataToFlask = async (data: Workout[], username: String) => {     
   try {
@@ -43,6 +44,7 @@ interface WorkoutListProps {
 const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [pendingWorkout, setPendingWorkout] = useState<WorkoutInput | null>(null);
+  const [showRecords, setShowRecords] = useState(false);
 
   const handleAddWorkout = () => {
     setPendingWorkout({ exercise: '', weight: 0, sets: 0, reps: 0 });
@@ -79,6 +81,10 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
     sendDataToFlask([...workouts], username || '');
     setWorkouts([]);
   };
+
+  if (showRecords) {
+    return <Records />; // Render the Records page if `showRecords` is true
+  }
 
   return (
     <div>
@@ -117,6 +123,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
         )}
       </div>
       {<AddWorkoutButton onClick={handleAddWorkout}/>}
+      {<button onClick={() => setShowRecords(true)}>View Records</button>}
       {<EndWorkoutButton onClick={handleEndWorkout}/>}
     </div>
   );
