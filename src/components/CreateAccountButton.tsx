@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface CreateAccountButtonProps {
   username: string;
   password: string;

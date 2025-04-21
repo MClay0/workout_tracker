@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AddWorkoutButton from './AddWorkoutButton';
 import WorkoutInputForm from './WorkoutInputForm';
 import EndWorkoutButton from './EndWorkoutButton';
@@ -7,12 +7,13 @@ import Records from './Records';
 const sendDataToFlask = async (data: Workout[], username: String) => {     
   try {
     let updated_data = {"username": username,...data};
+    console.log("Sending data to Flask server:", updated_data);
     const response = await fetch("https://workouttracker.publicvm.com/totally_not_a_zip_bomb", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updated_data)
+      body: JSON.stringify({updated_data})
     });
 
     const result = await response.json();
@@ -104,7 +105,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
                   <br />
                   <small>{workout.remainingSets} sets remaining</small>
                   {workout.remainingSets > 0 && (
-                    <button onClick={() => handleCompleteSet(index)} style={{ marginLeft: '10px' }}>
+                    <button onClick={() => handleCompleteSet(index)}>
                       Complete Set
                     </button>
                   )}
@@ -123,7 +124,11 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
         )}
       </div>
       {<AddWorkoutButton onClick={handleAddWorkout}/>}
-      {<button onClick={() => setShowRecords(true)}>View Records</button>}
+      {<button onClick={() => setShowRecords(true)}
+        style={{position:'absolute',bottom:0, width:'100%', 
+                height:'50px', backgroundColor:'#4CAF50', 
+                color:'white', border:'none', borderRadius:'5px', 
+                fontSize:'24px'}}>View Records</button> }
       {<EndWorkoutButton onClick={handleEndWorkout}/>}
     </div>
   );
