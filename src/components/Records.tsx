@@ -9,13 +9,35 @@ interface RecordsProps {
   username: string | null;
 }
 
+const fetchRecords = async (username: string) => {
+  try {
+    const response = await fetch(`https://workouttracker.publicvm.com/records?username=${encodeURIComponent(username)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch records');
+    }
+
+    const data = await response.json();
+    console.log('Fetched records:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching records:', error);
+    throw error;
+  }
+};
+
 const Records: React.FC<RecordsProps> = ({ username }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRecords = async () => {
+    const loadRecords = async () => {
       if (!username) {
         setError('No username provided.');
         setLoading(false);
@@ -23,31 +45,16 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
       }
 
       try {
-        let url = `https://workouttracker.publicvm.com/records?username=${username}`;
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log('Response:', response);
-        if (!response.ok) {
-          throw new Error('Failed to fetch records');
-        }
-
-        const data = await response.json();
-        console.log('Fetched records:', data);
+        const data = await fetchRecords(username);
         setRecords(data.data); // Assuming the response has a `data` field
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching records:', err);
-        
         setError('Failed to load records. Please try again later.');
         setLoading(false);
       }
     };
 
-    fetchRecords();
+    loadRecords();
   }, [username]);
 
   if (loading) {
