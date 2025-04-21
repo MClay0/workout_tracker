@@ -18,16 +18,24 @@ const fetchRecords = async (username: string): Promise<{ status: string; data: R
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`❌ Server responded with an error: ${errorText}`);
       throw new Error(`Failed to fetch records: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    console.log('✅ Fetched records:', data);
-    return data;
+    const rawData = await response.json();
+    console.log('✅ Fetched raw records:', rawData);
+
+    // Transform the response into the expected format
+    const transformedData: Record[] = rawData.data.map((item: { [key: string]: string }) => {
+      const [exercise, bestSet] = Object.entries(item)[0]; // Extract the key-value pair
+      return { exercise, bestSet };
+    });
+
+    console.log('✅ Transformed records:', transformedData);
+    return { status: rawData.status, data: transformedData };
   } catch (error) {
     console.error('❌ Error fetching records:', error);
     throw error;
@@ -49,7 +57,7 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
 
       try {
         const data = await fetchRecords(username);
-        setRecords(data.data); // Assuming the response has a `data` field
+        setRecords(data.data); // Use the transformed data
         setLoading(false);
       } catch (err) {
         setError('Failed to load records. Please try again later.');
