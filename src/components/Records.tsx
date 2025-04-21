@@ -35,6 +35,7 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
         }
 
         const data = await response.json();
+        console.log('Fetched records:', data);
         setRecords(data.data); // Assuming the response has a `data` field
         setLoading(false);
       } catch (err) {
