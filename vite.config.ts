@@ -12,5 +12,11 @@ export default defineConfig({
       protocol: 'wss',
       host: 'workouttracker.publicvm.com',
     },
+    proxy: {
+      '/records': {
+        target: 'https://workouttracker.publicvm.com', // Flask backend URL
+        changeOrigin: true,
+      },
+    },
   },
 })
