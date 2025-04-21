@@ -30,7 +30,7 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
             'Content-Type': 'application/json',
           },
         });
-
+        console.log('Response:', response);
         if (!response.ok) {
           throw new Error('Failed to fetch records');
         }
@@ -41,6 +41,7 @@ const Records: React.FC<RecordsProps> = ({ username }) => {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching records:', err);
+        
         setError('Failed to load records. Please try again later.');
         setLoading(false);
       }
