@@ -114,13 +114,15 @@ def receive_workout():
 def send_records():
     try:
         username = request.args.get('username')
+        print(f"Received username: {username}")  # Debug log
         user_file = f'{username}.txt'
+        print(f"Looking for file: {user_file}")  # Debug log
     
-        # store existing user data
         user_data = []
         if os.path.exists(user_file):
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
+                print(f"Loaded user data: {user_data}")  # Debug log
 
         return jsonify({'status': 'success', 'data': user_data})
     
