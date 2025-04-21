@@ -18,7 +18,7 @@ const fetchRecords = async (username: string): Promise<{ status: string; data: R
         'Content-Type': 'application/json',
       },
     });
-
+    console.log(response);
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`❌ Server responded with an error: ${errorText}`);
