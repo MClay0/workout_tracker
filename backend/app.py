@@ -123,7 +123,7 @@ def send_records():
         print(f"🔍 Looking for file: {user_file}")  # Debug log
 
         # Initialize an empty list for user data
-        user_data = []
+        user_data = {}
         if os.path.exists(user_file):
             with open(user_file, 'r') as file:
                 user_data = json.load(file)
