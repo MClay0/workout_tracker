@@ -108,7 +108,7 @@ def receive_workout():
     
     except Exception as e:
         print('❌ Error parsing workout data:', e)
-        return jsonify({'status': 'error', 'message': str(e)}), 100
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/records', methods=['GET'])
 def send_records():
@@ -136,12 +136,11 @@ def send_records():
 
     except json.JSONDecodeError:
         print('❌ Error: Invalid JSON in user file')
-        return jsonify({'status': 'error', 'message': 'Invalid JSON in user file'}), 300
+        return jsonify({'status': 'error', 'message': 'Invalid JSON in user file'}), 500
 
     except Exception as e:
         print(f'❌ Unexpected error: {e}')
-        return jsonify({'status': 'error', 'message': 'An unexpected error occurred'}), 600
-
+        return jsonify({'status': 'error', 'message': 'An unexpected error occurred'}), 500
 if __name__ == '__main__':
     # Flask will run on port 5000, which will be forwarded by Nginx
     app.run(host='0.0.0.0', port=5000, debug=True)
