@@ -104,7 +104,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ username }) => {
                   <br />
                   <small>{workout.remainingSets} sets remaining</small>
                   {workout.remainingSets > 0 && (
-                    <button onClick={() => handleCompleteSet(index)}>
+                    <button onClick={() => handleCompleteSet(index)} style={{ marginLeft: '10px' }}>
                       Complete Set
                     </button>
                   )}
